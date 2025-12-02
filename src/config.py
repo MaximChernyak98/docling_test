@@ -1,9 +1,3 @@
-"""Centralized configuration for the PDF semantic search system.
-
-This module contains all configuration parameters with type validation using Pydantic.
-All values have sensible defaults based on the technical specifications.
-"""
-
 from pathlib import Path
 from typing import Literal
 
@@ -11,16 +5,12 @@ from pydantic import BaseModel, Field
 
 
 class PDFProcessingConfig(BaseModel):
-    """Configuration for PDF processing and conversion."""
-
     ocr_enabled: bool = Field(default=False, description="Enable OCR for scanned PDFs (not supported in v1)")
     extract_images: bool = Field(default=False, description="Extract images from PDFs")
     page_limit: int | None = Field(default=None, description="Maximum pages to process (None = all)")
 
 
 class ChunkingConfig(BaseModel):
-    """Configuration for document chunking."""
-
     target_chunk_size: int = Field(default=512, description="Target chunk size in tokens")
     chunk_overlap: int = Field(default=50, description="Overlap between chunks in tokens")
     table_format: Literal["markdown", "html"] = Field(default="markdown", description="Table serialization format")
@@ -29,8 +19,6 @@ class ChunkingConfig(BaseModel):
 
 
 class EmbeddingConfig(BaseModel):
-    """Configuration for embedding generation."""
-
     model_name: str = Field(
         default="sentence-transformers/all-MiniLM-L6-v2", description="Sentence transformer model name"
     )
@@ -42,8 +30,6 @@ class EmbeddingConfig(BaseModel):
 
 
 class QdrantConfig(BaseModel):
-    """Configuration for Qdrant vector database."""
-
     host: str = Field(default="localhost", description="Qdrant host")
     http_port: int = Field(default=6333, description="Qdrant HTTP API port")
     grpc_port: int = Field(default=6334, description="Qdrant gRPC API port")
@@ -57,16 +43,12 @@ class QdrantConfig(BaseModel):
 
 
 class PathsConfig(BaseModel):
-    """Configuration for file and directory paths."""
-
     input_dir: Path = Field(default=Path("./data/input"), description="Directory for input PDF files")
     logs_dir: Path = Field(default=Path("./logs"), description="Directory for log files")
     cache_dir: Path | None = Field(default=None, description="Cache directory (None = use default)")
 
 
 class ProcessingConfig(BaseModel):
-    """Configuration for processing behavior."""
-
     verbose: bool = Field(default=True, description="Enable verbose output")
     log_level: Literal["DEBUG", "INFO", "WARNING", "ERROR"] = Field(default="INFO", description="Logging level")
     max_retries: int = Field(default=3, description="Maximum retries for failed operations")
@@ -74,8 +56,6 @@ class ProcessingConfig(BaseModel):
 
 
 class Config(BaseModel):
-    """Main configuration container for the entire system."""
-
     pdf_processing: PDFProcessingConfig = Field(default_factory=PDFProcessingConfig)
     chunking: ChunkingConfig = Field(default_factory=ChunkingConfig)
     embedding: EmbeddingConfig = Field(default_factory=EmbeddingConfig)
@@ -84,14 +64,12 @@ class Config(BaseModel):
     processing: ProcessingConfig = Field(default_factory=ProcessingConfig)
 
     def ensure_directories(self) -> None:
-        """Create necessary directories if they don't exist."""
         self.paths.input_dir.mkdir(parents=True, exist_ok=True)
         self.paths.logs_dir.mkdir(parents=True, exist_ok=True)
         self.qdrant.storage_path.mkdir(parents=True, exist_ok=True)
 
     @property
     def qdrant_url(self) -> str:
-        """Get the Qdrant HTTP API URL."""
         return f"http://{self.qdrant.host}:{self.qdrant.http_port}"
 
 
