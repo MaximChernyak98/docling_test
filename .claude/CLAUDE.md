@@ -9,7 +9,6 @@ This document contains critical information about working with this codebase. Fo
 
 2. Code Quality
    - Type hints required for all code
-   - Public APIs must have docstrings
    - Functions must be focused and small
    - Follow existing patterns exactly
    - Line length: 120 chars maximum
@@ -25,7 +24,6 @@ This document contains critical information about working with this codebase. Fo
     - PEP 8 naming (snake_case for functions/variables)
     - Class names in PascalCase
     - Constants in UPPER_SNAKE_CASE
-    - Document with docstrings
     - Use f-strings for formatting
 
 - For commits fixing bugs or adding features based on user reports add:
@@ -91,3 +89,4 @@ This document contains critical information about working with this codebase. Fo
 - I should always generate small amount of code. Before the generation estimate the size of the task and warn if it is better to split it into parts. You should try to plan the task that you can do inside the context window.
 - Always use correct information. If there is no information do not imagine anything and just answer that you don't know and ask more questions.
 - Use the simplest format for .sh files without any colors - only login and comments it the compicated parts
+- use docstings only in the very complex functions. Use comments only in the non-obvious parts. Do not use comments without neccesity
