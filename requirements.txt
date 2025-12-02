@@ -1,0 +1,17 @@
+# PDF Processing
+docling>=1.0.0
+
+# Semantic Chunking
+docling-core>=1.0.0
+
+# Vector Database Client
+qdrant-client>=1.7.0
+
+# Embedding Generation
+sentence-transformers>=2.2.0
+
+# Data Validation
+pydantic>=2.0.0
+
+# Numerical Operations
+numpy>=1.24.0
