@@ -1,7 +1,7 @@
 from typing import Any
 
 from docling_core.transforms.chunker import HybridChunker
-from docling_core.transforms.chunker.tokenizer import HuggingFaceTokenizer
+from docling_core.transforms.chunker.tokenizer.huggingface import HuggingFaceTokenizer
 from docling_core.types.doc import DoclingDocument
 
 from src.config import config
@@ -36,7 +36,11 @@ def chunk_document(document: DoclingDocument, source_file: str) -> list[dict[str
             if chunk.meta.doc_items:
                 first_item = chunk.meta.doc_items[0]
                 if hasattr(first_item, "prov") and first_item.prov:
-                    page_number = first_item.prov[0].page
+                    prov_item = first_item.prov[0]
+                    if hasattr(prov_item, "page_no"):
+                        page_number = prov_item.page_no
+                    elif hasattr(prov_item, "page"):
+                        page_number = prov_item.page
 
             heading_context = " > ".join(chunk.meta.headings) if chunk.meta.headings else ""
             content_type = _infer_content_type(chunk)

@@ -11,7 +11,10 @@
       "Bash(pip install:*)",
       "Bash(python:*)",
       "Bash(docker:*)",
-      "Bash(python3:*)"
+      "Bash(python3:*)",
+      "Bash(curl:*)",
+      "WebSearch",
+      "Bash(find:*)"
     ],
     "deny": [],
     "ask": []
