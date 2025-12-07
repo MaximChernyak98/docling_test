@@ -22,6 +22,13 @@
 - Before solving a task, estimate if it fits the context window.
 - If task may consume >75% of context — warn user and suggest splitting into smaller chunks.
 
+## Prompt History
+
+- Save every user prompt to `.claude/prompts_history.md` file.
+- Format: timestamp + prompt text (one entry per prompt).
+- Do NOT read or include `prompts_history.md` in context during requests.
+- This file is for audit/reference purposes only — append-only, never modify existing entries.
+
 ## MCP Servers
 
 - Prefer using available MCP servers for analysis and task solving.
